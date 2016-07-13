@@ -105,7 +105,12 @@ describe CanCan::ControllerAdditions do
   end
 
   it "cancan_resource_class is InheritedResource when class includes InheritedResources::Actions" do
-    allow(@controller.class).to receive(:ancestors) { ["InheritedResources::Actions"] }
+    class InheritedResources
+      module Actions
+      end
+    end
+
+    allow(@controller.class).to receive(:ancestors) { [InheritedResources::Actions] }
     expect(@controller.class.cancan_resource_class).to eq(CanCan::InheritedResource)
   end
 
